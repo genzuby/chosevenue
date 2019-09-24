@@ -236,6 +236,7 @@ const INPUTNAME = styled.input`
   font-size: calc(0.7rem+0.2vw);
   border: 1px solid #4d7298;
   outline: none;
+  width: 100%;
 
   ${media.pad`
     width: 70%;
@@ -256,6 +257,8 @@ const ADDPARTI = styled.button`
   background: #4d7298;
   color: #fff;
   cursor: pointer;
+  width: 60%;
+
   ${media.pad`
     width: 30%;
   `};
