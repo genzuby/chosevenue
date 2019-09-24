@@ -1,0 +1,7 @@
+// foursquare clinent id and client secret
+export const FS_CLIENT_ID = "OPLNTE4HFLUPCB22CHB510BED5ZXBPNCHBNJRBCYKPWIQZZX";
+export const FS_CLIENT_SECRET =
+  "TE4MFW30RPFZ4EVK3BI2GOCHATUNNDRJVCWVAYMOFUHMKWIK";
+// action types for redux
+export const FETCH_VENUE_LIST = "FETCH_VENUE_LIST";
+export const ADD_PARTICIPANT = "ADD_PARTICIPANT";
