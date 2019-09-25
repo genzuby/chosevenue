@@ -6,10 +6,10 @@ import styled from "styled-components";
 // for auto complete city list
 import cityGeoDBApi from "../apis/cityGeoLocation";
 
-// This component is to search location information and fetch data with action creator
+// This component is to search location information and fetch data with action creator(getVenueList)
 // If user found correct location informtaion, it will call action creator to fetch data from Foursquare API.
 // It will get the data, when user click on one item of list , key down 'enter' on the input box , or click "SEARCH" button.
-const SearchLocation = ({ close, openList, getVenueList }) => {
+const SearchLocation = ({ close, openList, getVenueList, loading }) => {
   // Initialize city list state of React Hook
   const [cityList, setCityList] = useState(null);
 
@@ -93,7 +93,9 @@ const SearchLocation = ({ close, openList, getVenueList }) => {
   const onClickCity = cityInfo => {
     // set city name on input box
     refInput.value = cityInfo.city;
-    // fetch venu list;
+    // loding bar active
+    loading(true);
+    // fetch venue list;
     fetchVenuList();
     // clear city list
     setCityList(null);
@@ -122,6 +124,7 @@ const SEARCHDIV = styled.div`
   position: relative;
   margin: 1em 0;
   width: inherite;
+  z-index: 99;
 `;
 
 const INPUTAREA = styled.div`

@@ -2,10 +2,10 @@ import { css } from "styled-components";
 
 const sizes = {
   pad: 1210,
-  mobile: 580
+  mobile: 500
 };
 const minsizes = {
-  pad: 581,
+  pad: 501,
   mobile: 1
 };
 // generate media query function

@@ -170,7 +170,7 @@ const VOTECOMP = styled.div`
 const VOTEBTN = styled.button`
   font-family: inherit;
   font-size: calc(0.8rem + 0.2vw);
-  color: #ec7d10;
+  color: rgb(255, 100, 0);
   border: none;
   outline: none;
   background: none;
@@ -187,7 +187,7 @@ const CLOSEICON = styled.span`
   transform: rotate(${props => props.degree + "deg"});
   transition: transform 0.15s ease-in;
   font-size: calc(0.7rem + 0.2vw);
-  color: #ec7d10;
+  color: rgb(255, 100, 0);
   padding: 0.3em 0.5em 0 0;
 
   &:hover {
@@ -214,8 +214,8 @@ const VOTELIST = styled.ul`
   li {
     padding: 0.4em 0.5em;
     background: #efefef;
-    color: #258dc0;
-    border: 1px solid #258dc0;
+    color: #969696;
+    border: 1px solid rgb(255, 100, 0);
     border-top: 1px solid transparent;
     font-family: inherit;
     font-size: calc(0.7rem + 0.2vw);
@@ -234,7 +234,7 @@ const INPUTNAME = styled.input`
   padding: 0.5em;
   font-family: inherit;
   font-size: calc(0.7rem+0.2vw);
-  border: 1px solid #4d7298;
+  border: 1px solid rgb(255, 160, 0);
   outline: none;
   width: 100%;
 
@@ -243,7 +243,7 @@ const INPUTNAME = styled.input`
   `};
 
   &:focus {
-    border: 1px solid #258dc0;
+    border: 1px solid rgb(255, 100, 0);
   }
 `;
 
@@ -254,10 +254,13 @@ const ADDPARTI = styled.button`
   padding: 0.5em;
   border: none;
   outline: none;
-  background: #4d7298;
+  background: rgb(255, 120, 0);
   color: #fff;
   cursor: pointer;
   width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   ${media.pad`
     width: 30%;

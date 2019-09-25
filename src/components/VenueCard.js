@@ -119,7 +119,9 @@ const VenueCard = ({ venueList, groupid, venueid, rankInfo, voters }) => {
       </MAININFO>
       <DETAILINFO>
         <TEXTAREA
+        // when display on mobile and desktop size
           height={voteAreaState ? "98%" : "55%"}
+        // when display on pad size
           width={voteAreaState ? "98%" : "60%"}
           display={voteAreaState ? "flex" : "block"}
         >
@@ -162,14 +164,15 @@ const mapStateToProps = (state, ownProps) => {
 const CARDBODY = styled.div`
   background-image: url(${props => props.bgImg});
   background-size: cover;
-  height: 500px;
-  min-width: 350px;
+  min-height: 510px;
+  min-width: 310px;
   width: 28%;
+  border-radius: 6px;
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
   margin: auto 1em;
   /* display set as a grid for responsive web */
   display: grid;
-  grid: 35% 65% / auto;
+  grid: 30% 70% / auto;
 
   ${media.pad`
   /* media query from media.js( 1210 ~ 581) */
@@ -182,19 +185,21 @@ const CARDBODY = styled.div`
   ${media.mobile`
   /* media query from media.js( 580 ~ 1) */
     margin : .5em auto;
+    width: 86vw;
   `};
 `;
 
 /* venue card top area information styles */
 const MAININFO = styled.div`
   grid-row: 1;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 1em;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 6px 6px 0 0;
+  padding: 1.2em 1.5em;
   display: grid;
   color: #fff;
   font-family: inherit;
   grid-template-columns: 15% 65% 20%;
-  grid-template-rows: 15% auto 1fr;
+  grid-template-rows: 18% auto 1fr;
   grid-template-areas:
     " vote vote vote "
     " name name rating "
@@ -204,7 +209,7 @@ const MAININFO = styled.div`
     grid-row: 1;
     grid-column : 1;
     grid-template-columns: 35% 35% 30%;
-    grid-template-rows: 15% auto 1fr 30%;
+    grid-template-rows: 18% auto 1fr 30%;
     grid-template-areas:
       " vote vote vote "
       " name name name "
@@ -224,6 +229,7 @@ const MAININFO = styled.div`
     grid-area: vote;
     display: flex;
     font-size: calc(0.8rem + 0.2vw);
+    margin-bottom: 0.3em;
 
     i {
       font-size: calc(1rem + 0.3vw);
@@ -284,6 +290,7 @@ const TEXTAREA = styled.div`
   height: ${props => props.height};
   background: #fff;
   border: 1px solid #ccc;
+  border-radius: 4px;
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
   padding: 1em;
   transition: all 0.3s ease-in-out;

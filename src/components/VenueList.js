@@ -5,10 +5,26 @@ import styled from "styled-components";
 import media from "./media";
 // component for each venue info
 import VenueCard from "./VenueCard";
+// import loading Component
+import LoadingAni from "./LoadingAni";
 
 // This component is parent of each card.
 // This component pass venue id to get data from redux on the child
 class VenueList extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      venueList: []
+    };
+
+    this.updateVenueList();
+  }
+
+  updateVenueList() {
+    this.setState({ venueList: this.props.venueList });
+  }
+
   setRankingArry = () => {
     if (!this.props.voters) return;
 
@@ -52,6 +68,11 @@ class VenueList extends React.Component {
     // group id to update data for voting
     const keyval = Object.keys(this.props.venueList);
 
+    // if (this.props.loadState && this.state.venueList.length === 0) {
+    //   return <LoadingAni></LoadingAni>;
+    // } else if (this.state.venueList.length > 0) {
+    //   this.props.loading(false);
+    // }
     // "venueList" data from redux set like {groupid : [venueList]}
     if (this.props.venueList[keyval]) {
       return this.props.venueList[keyval].map(vanue => {
@@ -66,14 +87,18 @@ class VenueList extends React.Component {
       });
     } else if (this.props.venueList.length === 0) {
       // when there is no data from result
-      return (
-        <p>
-          No restaurant found!
-          <br />
-          <br />
-          Please search with correct location!
-        </p>
-      );
+      if (this.props.loadState) {
+        return <LoadingAni></LoadingAni>;
+      } else {
+        return (
+          <p>
+            No restaurant found!
+            <br />
+            <br />
+            Please search with correct location!
+          </p>
+        );
+      }
     }
   };
 
@@ -93,15 +118,15 @@ const mapStateToProps = state => {
 };
 
 const VENUES = styled.div`
-  min-height: 78vh;
+  min-height: 75vh;
   width: 100%;
-  background: rgba(255, 255, 255, 0.5);
+  /* background: rgba(255, 255, 255, 0.5); */
+  background: rgba(0, 128, 128, 0.3);
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 18vh;
 
   ${media.pad`
     flex-direction : column;
