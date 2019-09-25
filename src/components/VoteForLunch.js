@@ -141,7 +141,9 @@ const VoteForLunch = ({
             placeholder="Input your name"
             onKeyDown={handleKeyDownInput}
           />
-          <ADDPARTI onClick={onClickParicipant}>Add participant</ADDPARTI>
+          <ADDPARTI onClick={onClickParicipant} title="Add participant">
+            Add participant
+          </ADDPARTI>
         </VOTEINPUT>
         <VOTELIST>{renderVoter()}</VOTELIST>
       </VOTETABLE>

@@ -11,7 +11,7 @@ export const getVenueList = param => async dispatch => {
   try {
     // fetch data
     const response = await foursquareApi.get(
-      `/search/?client_id=${FS_CLIENT_ID}&client_secret=${FS_CLIENT_SECRET}&query=lunch,cafe&${param}&v=20190724&limit=3`
+      `/search/?client_id=${FS_CLIENT_ID}&client_secret=${FS_CLIENT_SECRET}&query=lunch,restaurant,cafe&${param}&v=20190724&limit=3`
     );
 
     // if the request has been successfully done, will dispatch data for a reducer.

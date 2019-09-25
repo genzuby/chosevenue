@@ -107,6 +107,18 @@ const VenueCard = ({ venueList, groupid, venueid, rankInfo, voters }) => {
     );
   };
 
+  const renderTel = () => {
+    if (veneuInfo.contact.formattedPhone) {
+      return (
+        <p className="detailinfo tel">
+          TEL : {veneuInfo.contact.formattedPhone}
+        </p>
+      );
+    } else {
+      return "";
+    }
+  };
+
   return (
     <CARDBODY bgImg={getBgImage()}>
       <MAININFO>
@@ -119,9 +131,9 @@ const VenueCard = ({ venueList, groupid, venueid, rankInfo, voters }) => {
       </MAININFO>
       <DETAILINFO>
         <TEXTAREA
-        // when display on mobile and desktop size
+          // when display on mobile and desktop size
           height={voteAreaState ? "98%" : "55%"}
-        // when display on pad size
+          // when display on pad size
           width={voteAreaState ? "98%" : "60%"}
           display={voteAreaState ? "flex" : "block"}
         >
@@ -129,9 +141,7 @@ const VenueCard = ({ venueList, groupid, venueid, rankInfo, voters }) => {
             <p className="detailinfo">
               {accData(veneuInfo.location.formattedAddress, " ")}
             </p>
-            <p className="detailinfo">
-              TEL : {veneuInfo.contact.formattedPhone}
-            </p>
+            {renderTel()}
             <ICONGROUP>
               {renderLinkInfo()}
               {fourSqLink()}
@@ -178,6 +188,7 @@ const CARDBODY = styled.div`
   /* media query from media.js( 1210 ~ 581) */
     grid:  auto/ 40% 60%;
     height: 260px;
+    min-height: 260px;
     width: 86%;
     margin : .5em auto;
   `};
@@ -233,7 +244,7 @@ const MAININFO = styled.div`
 
     i {
       font-size: calc(1rem + 0.3vw);
-      color: #e4ff1a;
+      color: rgb(255, 215, 0);
       margin-right: 0.5em;
     }
   }
@@ -292,7 +303,7 @@ const TEXTAREA = styled.div`
   border: 1px solid #ccc;
   border-radius: 4px;
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
-  padding: 1em;
+  padding: 1em 1.5em;
   transition: all 0.3s ease-in-out;
 
   ${media.pad`
@@ -313,6 +324,10 @@ const TEXTAREA = styled.div`
     font-size: calc(0.7rem + 0.2vw);
     padding: 0.3em 0;
   }
+
+  .tel {
+    font-size: calc(0.6rem + 0.2vw);
+  }
 `;
 
 const TEXTINFO = styled.div`
@@ -322,10 +337,10 @@ const TEXTINFO = styled.div`
 `;
 
 const LINKPAGE = styled.a`
-  color: #0eb1d2;
+  color: #29ccab;
 
   &:visited {
-    color: #0eb1d2;
+    color: #29ccab;
   }
 `;
 
@@ -336,8 +351,8 @@ const ICONGROUP = styled.div`
   i {
     font-size: calc(1.1rem + 0.2vw);
     margin-right: 0.3em;
-    &:hoer {
-      color: #f9b3d1;
+    &:hover {
+      color: rgb(0, 139, 139);
     }
   }
 `;
