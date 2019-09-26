@@ -11,6 +11,29 @@ import LoadingAni from "./LoadingAni";
 // This component is parent of each card.
 // This component pass venue id to get data from redux on the child
 class VenueList extends React.Component {
+  // for loading bar
+  state = { groupid: null };
+
+  componentDidMount() {
+    this.setState({ groupid: Object.keys(this.props.venueList) });
+  }
+
+  // need to modify with getDerivedStateFromProps() method
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    // when component get new props. if groupid is changed show loading component
+    const nextGroupid = Object.keys(nextProps.venueList);
+    const currGroupid = Object.keys(this.props.venueList);
+
+    // next venue groupid is not same with this props groupid and loading state from parent is true
+    if (nextGroupid !== currGroupid && this.props.loadState)
+      this.props.loading(false);
+    else if (nextGroupid === currGroupid && !this.props.loadState) {
+      // next venue groupid is same with this props groupid and loading state from parent is false
+      this.props.loading(true);
+      this.setState({ groupid: currGroupid });
+    }
+  }
+
   setRankingArry = () => {
     if (!this.props.voters) return;
 
@@ -53,8 +76,14 @@ class VenueList extends React.Component {
   renderVenueList = () => {
     // group id to update data for voting
     const keyval = Object.keys(this.props.venueList);
-    if (this.props.venueList[keyval]) {
+
+    if (this.props.loadState && keyval !== this.state.groupid) {
+      return <LoadingAni></LoadingAni>;
+    } else {
       this.props.loading(false);
+    }
+
+    if (this.props.venueList[keyval]) {
       return this.props.venueList[keyval].map(vanue => {
         return (
           <VenueCard
@@ -65,10 +94,7 @@ class VenueList extends React.Component {
           ></VenueCard>
         );
       });
-    } else if (
-      this.props.venueList.length === 0 ||
-      this.props.venueList[keyval].length === 0
-    ) {
+    } else if (this.props.venueList.length === 0) {
       // when there is no data from result
       if (this.props.loadState) {
         return <LoadingAni></LoadingAni>;
@@ -93,7 +119,6 @@ class VenueList extends React.Component {
 // get Venue data from redux store
 const mapStateToProps = state => {
   const groupid = Object.keys(state.venueList);
-
   return {
     venueList: state.venueList,
     voters: state.voters[groupid]

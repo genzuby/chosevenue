@@ -158,7 +158,7 @@ const VoteForLunch = ({
           </ADDPARTI>
         </VOTEINPUT>
         <VOTEDINFO>
-          <p>People who voted this venue</p>
+          <p>People who voted for this venue</p>
           <VOTELIST>{renderVoter()}</VOTELIST>
         </VOTEDINFO>
       </VOTETABLE>
