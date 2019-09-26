@@ -5,7 +5,7 @@ The application consists of two parts:<br>
 
 1. Getting the recommendations<br>
 2. Table for voting.<br>
-   <br><br>
+   <br>
 
 ## Libraries
 
