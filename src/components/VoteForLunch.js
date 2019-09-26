@@ -118,7 +118,6 @@ const VoteForLunch = ({
       return val.length > 0;
     });
 
-    console.log(votedId);
     // to get venue information from veneus information by found voted venue id
     const getVenueName = venueList.find(venue => venue.main.id === votedId);
 

@@ -294,10 +294,11 @@ const DETAILINFO = styled.div`
   `};
 `;
 
+// card bottom area information : adress, tel, vote info
 const TEXTAREA = styled.div`
   margin: auto 0.5em 0.5em;
   width: 98%;
-  ${props => (props.openVote ? `height: 96%` : `height: 46%`)};
+  ${props => (props.openVote ? `height: 96%` : `height: 52%`)};
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -333,10 +334,12 @@ const TEXTAREA = styled.div`
 
 const TEXTINFO = styled.div`
   ${media.pad`
+  /* when pad size, if open vote, display none every other informtaion */
     ${props => (props.openVote ? `display: none` : `display : block`)};
   `};
 `;
 
+// homapge and foursqure url link styles
 const LINKPAGE = styled.a`
   color: #29ccab;
 
