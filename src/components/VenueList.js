@@ -14,10 +14,6 @@ class VenueList extends React.Component {
   // for loading bar
   state = { groupid: null };
 
-  componentDidMount() {
-    this.setState({ groupid: Object.keys(this.props.venueList) });
-  }
-
   // need to modify with getDerivedStateFromProps() method
   UNSAFE_componentWillReceiveProps(nextProps) {
     // when component get new props. if groupid is changed show loading component
