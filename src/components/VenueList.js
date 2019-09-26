@@ -74,12 +74,12 @@ class VenueList extends React.Component {
         return <LoadingAni></LoadingAni>;
       } else {
         return (
-          <p>
+          <NOTICE>
             No restaurant found!
             <br />
             <br />
             Please search for a valid location!
-          </p>
+          </NOTICE>
         );
       }
     }
@@ -122,12 +122,12 @@ const VENUES = styled.div`
     overflow-y: auto;
     padding : 2em 0;
   `};
+`;
 
-  p {
-    font-family: inherit;
-    color: #fff;
-    font-size: calc(1.2rem+2vw);
-  }
+const NOTICE = styled.p`
+  font-family: inherit;
+  color: #fff;
+  font-size: calc(1rem + 0.3vw);
 `;
 
 // connect redux data with react component

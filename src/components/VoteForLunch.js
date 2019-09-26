@@ -158,7 +158,10 @@ const VoteForLunch = ({
             Add participant
           </ADDPARTI>
         </VOTEINPUT>
-        <VOTELIST>{renderVoter()}</VOTELIST>
+        <VOTEDINFO>
+          <p>People who voted this venue</p>
+          <VOTELIST>{renderVoter()}</VOTELIST>
+        </VOTEDINFO>
       </VOTETABLE>
     </VOTECOMP>
   );
@@ -179,7 +182,7 @@ const VOTECOMP = styled.div`
   position: relative;
 
   ${media.pad`
-     ${props => (props.openedTable ? `height: 80.2%` : `height: 30%`)}
+     ${props => (props.openedTable ? `height: 98%` : `height: 30%`)}
   `};
 `;
 
@@ -222,13 +225,32 @@ const VOTETABLE = styled.div`
   width: 96%;
   transition: all 0.3s ease-in-out;
   flex-direction: column;
+
+  ${media.pad`
+     ${props => (props.openedTable ? `height: 90%` : `height: 0`)}
+  `};
+`;
+
+const VOTEDINFO = styled.div`
+  width: 100%;
+  overflow: auto;
+
+  p {
+    font-family: inherit;
+    font-size: calc(0.6rem + 0.2vw);
+    color: rgb(255, 100, 0);
+    background: #fff;
+    padding: 0.3em 0;
+    margin-bottom: 2px;
+    position: sticky;
+    top: 0;
+    left: 0;
+  }
 `;
 
 const VOTELIST = styled.ul`
   width: 100%;
-  /* max-height: 90%; */
   padding: 0;
-  overflow: auto;
 
   li {
     padding: 0.4em 0.5em;
@@ -238,6 +260,10 @@ const VOTELIST = styled.ul`
     border-top: 1px solid transparent;
     font-family: inherit;
     font-size: calc(0.7rem + 0.2vw);
+
+    &:nth-of-type(1) {
+      border-top: 1px solid rgb(255, 100, 0);
+    }
   }
 `;
 

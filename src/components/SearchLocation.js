@@ -85,7 +85,11 @@ const SearchLocation = ({ close, openList, getVenueList, loading }) => {
     } else if (e.keyCode === 40) {
       // when press key down, go to the first item of the list
       if (!refList) return;
-      refList.current[0].focus();
+      try {
+        refList.current[0].focus();
+      } catch (err) {
+        console.log("focus error");
+      }
     } else if (e.keyCode === 13) {
       // Enter key down
       fetchVenuList();
