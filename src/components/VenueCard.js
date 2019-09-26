@@ -92,13 +92,15 @@ const VenueCard = ({ venueList, groupid, venueid, rankInfo, voters }) => {
     if (rankInfo === undefined) {
       return (
         <div className="vote">
-          <p>No one picks this venue yet</p>
+          <p>No one has picked this venue yet</p>
         </div>
       );
     }
 
+    // if the venue get the first position, show a medal icon
+    // from the second places, just show how many votes are gotten.
     const medal = rankInfo.rank === 1 ? <i className="fas fa-medal"></i> : "";
-    const descRank = `No.${rankInfo.rank} (get ${rankInfo.count} votes)`;
+    const descRank = `No.${rankInfo.rank} | ${rankInfo.count} vote(s)`;
     return (
       <div className="vote">
         {medal}
@@ -107,6 +109,7 @@ const VenueCard = ({ venueList, groupid, venueid, rankInfo, voters }) => {
     );
   };
 
+  // tel information of this venue
   const renderTel = () => {
     if (veneuInfo.contact.formattedPhone) {
       return (
@@ -130,14 +133,8 @@ const VenueCard = ({ venueList, groupid, venueid, rankInfo, voters }) => {
         <h3 className="desc">{accData(veneuInfo.categories, ", ", "name")}</h3>
       </MAININFO>
       <DETAILINFO>
-        <TEXTAREA
-          // when display on mobile and desktop size
-          height={voteAreaState ? "98%" : "55%"}
-          // when display on pad size
-          width={voteAreaState ? "98%" : "60%"}
-          display={voteAreaState ? "flex" : "block"}
-        >
-          <TEXTINFO display={voteAreaState ? "none" : "block"}>
+        <TEXTAREA openVote={voteAreaState}>
+          <TEXTINFO openVote={voteAreaState}>
             <p className="detailinfo">
               {accData(veneuInfo.location.formattedAddress, " ")}
             </p>
@@ -182,7 +179,7 @@ const CARDBODY = styled.div`
   margin: auto 1em;
   /* display set as a grid for responsive web */
   display: grid;
-  grid: 30% 70% / auto;
+  grid: 35% 65% / auto;
 
   ${media.pad`
   /* media query from media.js( 1210 ~ 581) */
@@ -219,13 +216,14 @@ const MAININFO = styled.div`
   ${media.pad`
     grid-row: 1;
     grid-column : 1;
-    grid-template-columns: 35% 35% 30%;
+    grid-template-columns: 45% 25% 30%;
     grid-template-rows: 18% auto 1fr 30%;
     grid-template-areas:
       " vote vote vote "
       " name name name "
       " desc desc desc "
-      " . . rating ";
+      " . rating rating ";
+    border-radius: 6px 0 0 6px;
   `};
 
   * {
@@ -265,18 +263,19 @@ const RATING = styled.div`
   grid-area: rating;
   background: ${props => (props.bgColor ? props.bgColor : `#29ccab`)};
   border-radius: 3px;
-  height: 40%;
+  height: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: calc(0.9rem + 0.3vw);
+  font-size: 1.2rem;
 
   ${media.pad`
-    height: 80%;
+    height: 70%;
+    width : 60%;
   `};
 
   span {
-    font-size: calc(0.6rem + 0.2vw);
+    font-size: 70%;
     padding-top: 0.3em;
   }
 `;
@@ -298,19 +297,21 @@ const DETAILINFO = styled.div`
 const TEXTAREA = styled.div`
   margin: auto 0.5em 0.5em;
   width: 98%;
-  height: ${props => props.height};
+  ${props => (props.openVote ? `height: 96%` : `height: 46%`)};
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
   padding: 1em 1.5em;
   transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
 
   ${media.pad`
     height: 96%;
     margin: auto 0.5em;
-    width : ${props => props.width};
-    display : ${props => props.display};
+    ${props => (props.openVote ? `width: 98%` : `width: 60%`)};
+    ${props => (props.openVote ? `display: flex` : `display : block`)};
     padding-left : 2em;
   `};
 
@@ -332,7 +333,7 @@ const TEXTAREA = styled.div`
 
 const TEXTINFO = styled.div`
   ${media.pad`
-    display : ${props => props.display};
+    ${props => (props.openVote ? `display: none` : `display : block`)};
   `};
 `;
 

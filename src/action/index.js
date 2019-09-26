@@ -18,7 +18,7 @@ export const getVenueList = param => async dispatch => {
     if (response.data.response) {
       // Informaton for no result
       if (response.data.response.venues.length === 0) {
-        alert("There is no data the area that you selected.");
+        alert("There is no data for the area that you selected.");
         return;
       }
 
@@ -36,7 +36,7 @@ export const getVenueList = param => async dispatch => {
       return;
     }
   } catch {
-    alert("There is no data the area that you selected.");
+    alert("There is no data for the area that you selected.");
     return;
   }
 };

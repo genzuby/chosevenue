@@ -6,11 +6,16 @@ import styled from "styled-components";
 // for responsive web
 import media from "./media";
 
+// This component is vote information and action of each card
+// This component gets tha data from redux store by venue id and group id
+// when user vote a venue, it will call action creator(addParticipant) and update in redux store
+// User can only one vote by their name, spaces that are inserted in names will be ignored and only applied one space.
 const VoteForLunch = ({
   onHandleState,
   groupid,
   venueid,
   addParticipant,
+  venueList,
   voters
 }) => {
   // set state for toggle vote menu
@@ -59,13 +64,15 @@ const VoteForLunch = ({
   const onClickParicipant = e => {
     if (refInputName.value.length < 3) {
       // vote for lunch, must input greater than 2 chractors
-      alert("Please check your name. Name must be greater than 2 chractors.");
+      alert("Please check your name. Name must be greater than 2 charactors.");
       return;
     }
 
     const votedVenue = checkNameDuplicate();
     if (votedVenue) {
-      alert("You already voted for lunch");
+      // if the name that user input is duplicated, get the venune name that is already voted by same name
+      const votedVenueName = getKeyByVenueName(textTrim(refInputName.value));
+      alert(`You already voted for "${votedVenueName}"`);
       return;
     }
 
@@ -95,16 +102,28 @@ const VoteForLunch = ({
     return sameName;
   };
 
-  // const getKeyByValue = value => {
-  //   const keyArr = Object.keys(voters);
-  //   // return value;
-  //   return keyArr.map(key => {
-  //     console.log(voters[key], value);
-  //     return voters[key].find(
-  //       voter => voter.toUpperCase() === value.toUpperCase()
-  //     );
-  //   });
-  // };
+  const getKeyByVenueName = value => {
+    // make array of votered venue ids
+    const keyArr = Object.keys(voters);
+
+    // find key by input value
+    const votedId = keyArr.find(key => {
+      // search the value if there is data on each venue key value
+      const val = voters[key].find(
+        voter => voter.toUpperCase() === value.toUpperCase()
+      );
+      // When couldn't find key by current key
+      if (val === undefined) return null;
+
+      return val.length > 0;
+    });
+
+    console.log(votedId);
+    // to get venue information from veneus information by found voted venue id
+    const getVenueName = venueList.find(venue => venue.main.id === votedId);
+
+    return getVenueName.main.name;
+  };
 
   const renderVoter = () => {
     // voter render , check where data exist or not
@@ -117,23 +136,17 @@ const VoteForLunch = ({
   };
 
   return (
-    <VOTECOMP
-      height={tableHeightState ? "52%" : "45%"}
-      padheight={tableHeightState ? "80.2%" : "20%"}
-    >
-      <VOTEBTN onClick={toggleVoteTable}>
+    <VOTECOMP openedTable={tableHeightState}>
+      <VOTEBTN onClick={toggleVoteTable} openedTable={tableHeightState}>
         <CLOSEICON
-          degree={tableHeightState ? 0 : 45}
+          openedTable={tableHeightState}
           title={tableHeightState ? "Close Vote" : "Open Vote"}
         >
           <i className="fas fa-times"></i>
         </CLOSEICON>
         Vote for Lunch
       </VOTEBTN>
-      <VOTETABLE
-        height={tableHeightState ? "100%" : 0}
-        display={tableHeightState ? "flex" : "none"}
-      >
+      <VOTETABLE openedTable={tableHeightState}>
         <VOTEINPUT>
           <INPUTNAME
             ref={el => (refInputName = el)}
@@ -155,20 +168,22 @@ const VoteForLunch = ({
 const mapStateToProps = (state, ownProps) => {
   // find voters info near this location that is selected by user , with the props from parent(ownProps)
   return {
+    venueList: state.venueList[ownProps.groupid],
     voters: state.voters[ownProps.groupid]
   };
 };
 
 const VOTECOMP = styled.div`
-  height: ${props => props.height};
+  ${props => (props.openedTable ? `height: 100%` : `height: 55%`)}
   width: 98%;
   position: relative;
 
   ${media.pad`
-  height: ${props => props.padheight};
+     ${props => (props.openedTable ? `height: 80.2%` : `height: 30%`)}
   `};
 `;
 
+// vote button : fold and close(check with tableHeightState state)
 const VOTEBTN = styled.button`
   font-family: inherit;
   font-size: calc(0.8rem + 0.2vw);
@@ -177,7 +192,7 @@ const VOTEBTN = styled.button`
   outline: none;
   background: none;
   position: absolute;
-  top: 1em;
+  ${props => (props.openedTable ? `top: 0` : `bottom: 0`)};
   left: 0;
   text-align: left;
   cursor: pointer;
@@ -185,31 +200,33 @@ const VOTEBTN = styled.button`
   display: flex;
 `;
 
+// ease to recognize to user whether voting information table is opened or not
 const CLOSEICON = styled.span`
-  transform: rotate(${props => props.degree + "deg"});
+  transform: rotate(${props => (props.openedTable ? `0deg` : `45deg`)});
   transition: transform 0.15s ease-in;
   font-size: calc(0.7rem + 0.2vw);
   color: rgb(255, 100, 0);
   padding: 0.3em 0.5em 0 0;
 
   &:hover {
-    transform: rotate(${props => props.degree + 45 + "deg"});
+    transform: rotate(${props => (props.openedTable ? `45deg` : `0deg`)});
   }
 `;
 
+// display user list who vote for that venue
 const VOTETABLE = styled.div`
   position: absolute;
-  top: 3em;
-  height: ${props => props.height};
+  top: 1.6em;
+  ${props => (props.openedTable ? `display: flex` : `display: none`)};
+  ${props => (props.openedTable ? `height: 86%` : `height: 0`)};
   width: 96%;
-  display: ${props => props.display};
   transition: all 0.3s ease-in-out;
   flex-direction: column;
 `;
 
 const VOTELIST = styled.ul`
   width: 100%;
-  max-height: 90%;
+  /* max-height: 90%; */
   padding: 0;
   overflow: auto;
 
@@ -230,15 +247,16 @@ const VOTEINPUT = styled.div`
   margin: 0;
 `;
 
-// input component styles
+// vote input component styles
 const INPUTNAME = styled.input`
   height: 2.2em;
   padding: 0.5em;
   font-family: inherit;
   font-size: calc(0.7rem+0.2vw);
-  border: 1px solid rgb(255, 160, 0);
+  border: 1px solid rgb(255, 140, 0);
   outline: none;
   width: 100%;
+  border-radius: 0;
 
   ${media.pad`
     width: 70%;
@@ -249,6 +267,7 @@ const INPUTNAME = styled.input`
   }
 `;
 
+// add voting button styles
 const ADDPARTI = styled.button`
   height: 2.2em;
   font-family: inherit;

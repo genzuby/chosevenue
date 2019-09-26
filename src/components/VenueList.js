@@ -11,20 +11,6 @@ import LoadingAni from "./LoadingAni";
 // This component is parent of each card.
 // This component pass venue id to get data from redux on the child
 class VenueList extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      venueList: []
-    };
-
-    this.updateVenueList();
-  }
-
-  updateVenueList() {
-    this.setState({ venueList: this.props.venueList });
-  }
-
   setRankingArry = () => {
     if (!this.props.voters) return;
 
@@ -67,14 +53,8 @@ class VenueList extends React.Component {
   renderVenueList = () => {
     // group id to update data for voting
     const keyval = Object.keys(this.props.venueList);
-
-    // if (this.props.loadState && this.state.venueList.length === 0) {
-    //   return <LoadingAni></LoadingAni>;
-    // } else if (this.state.venueList.length > 0) {
-    //   this.props.loading(false);
-    // }
-    // "venueList" data from redux set like {groupid : [venueList]}
     if (this.props.venueList[keyval]) {
+      this.props.loading(false);
       return this.props.venueList[keyval].map(vanue => {
         return (
           <VenueCard
@@ -85,7 +65,10 @@ class VenueList extends React.Component {
           ></VenueCard>
         );
       });
-    } else if (this.props.venueList.length === 0) {
+    } else if (
+      this.props.venueList.length === 0 ||
+      this.props.venueList[keyval].length === 0
+    ) {
       // when there is no data from result
       if (this.props.loadState) {
         return <LoadingAni></LoadingAni>;
@@ -95,7 +78,7 @@ class VenueList extends React.Component {
             No restaurant found!
             <br />
             <br />
-            Please search with correct location!
+            Please search for a valid location!
           </p>
         );
       }

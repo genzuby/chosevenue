@@ -82,7 +82,7 @@ const SearchLocation = ({ close, openList, getVenueList, loading }) => {
   const fetchVenuList = () => {
     // const param = `ll=${selectedCity.lat},${selectedCity.lon}`;
     if (refInput.value.length < 2) {
-      alert("Please input or select city name!");
+      alert("Please input or select a city name!");
     }
     const param = "near=" + refInput.value;
     // fetch data
@@ -133,6 +133,7 @@ const INPUTAREA = styled.div`
   background: #29ccab;
   justify-content: space-between;
   border-radius: 3px;
+  padding: 1px;
 `;
 
 const SUBMIT = styled.button`
@@ -147,6 +148,7 @@ const SUBMIT = styled.button`
 
 // input component styles
 const INPUTFIELD = styled.input`
+  margin: 0;
   height: 2.5em;
   padding: 0.5em 0.7em;
   font-size: calc(0.9rem+0.2vw);
@@ -154,12 +156,13 @@ const INPUTFIELD = styled.input`
   border: 1px solid #29ccab;
   outline: none;
   font-family: inherit;
+  border-radius: 3px 0 0 3px;
 `;
 
 // fetched list item styles
 const CITYLIST = styled.ul`
   position: absolute;
-  top: 1.1em;
+  top: 1.2em;
   width: 300px;
   padding: 0;
   max-height: 60vh;

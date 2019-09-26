@@ -1,5 +1,35 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+This application helps to choose a venue for lunch.<br>
+The application consists of two parts:<br>
+
+1. Getting the recommendations<br>
+2. Table for voting.<br>
+   <br><br>
+
+## Libraries
+
+react<br>
+redux<br>
+redux-thunk<br>
+es6<br>
+axios<br>
+sass(scss)<br>
+styled components<br>
+
+## Data from
+
+City Geo-Location Lookup API<br>
+Foursquare Venue API<br>
+
+### query string
+
+?client_id=${FS_CLIENT_ID}&client_secret=${FS_CLIENT_SECRET}&query=lunch,restaurant,cafe&\${param}&v=20190724&limit=3
+<br>
+
+##Live Demo
+[https://venueforlunch.netlify.com](https://venueforlunch.netlify.com)
+
 ## Available Scripts
 
 In the project directory, you can run:

@@ -49,10 +49,10 @@ const BODY = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  padding-top: 1em;
 `;
 
 const TITLE = styled.h1`
-  padding-top: 0.5em;
   color: #fff;
   font-weight: 300;
   font-size: calc(1rem+2vw);
