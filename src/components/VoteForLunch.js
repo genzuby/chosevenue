@@ -80,7 +80,7 @@ const VoteForLunch = ({
     try {
       addParticipant(groupid, venueid, textTrim(refInputName.value));
       // when fetch data successfully, reset input value
-      e.target.value = "";
+      refInputName.value = "";
     } catch (err) {
       alert(err);
     }

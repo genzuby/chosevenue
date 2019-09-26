@@ -50,12 +50,25 @@ const SearchLocation = ({ close, openList, getVenueList, loading }) => {
           ref={el => (refList.current[i] = el)}
           //For when press keydown on input field, cursor move to the first item of list
           tabIndex="0"
-          onClick={() =>
-            onClickCity({
-              lat: city.lat,
-              lon: city.lon,
-              city: city.name
-            })
+          onClick={e =>
+            onClickCity(
+              {
+                lat: city.lat,
+                lon: city.lon,
+                city: city.name
+              },
+              e
+            )
+          }
+          onKeyDown={e =>
+            onClickCity(
+              {
+                lat: city.lat,
+                lon: city.lon,
+                city: city.name
+              },
+              e
+            )
           }
         >
           {city.name}
@@ -90,15 +103,18 @@ const SearchLocation = ({ close, openList, getVenueList, loading }) => {
   };
 
   // click event on item of list
-  const onClickCity = cityInfo => {
-    // set city name on input box
-    refInput.value = cityInfo.city;
-    // loding bar active
-    loading(true);
-    // fetch venue list;
-    fetchVenuList();
-    // clear city list
-    setCityList(null);
+  const onClickCity = (cityInfo, e) => {
+    // keydown enter or click
+    if (e.keyCode === 13 || !e.keyCode) {
+      // set city name on input box
+      refInput.value = cityInfo.city;
+      // loding bar active
+      loading(true);
+      // fetch venue list;
+      fetchVenuList();
+      // clear city list
+      setCityList(null);
+    }
   };
 
   return (
@@ -106,7 +122,7 @@ const SearchLocation = ({ close, openList, getVenueList, loading }) => {
     <SEARCHDIV onClick={e => e.stopPropagation()}>
       <INPUTAREA>
         <INPUTFIELD
-          type="text"
+          type="search"
           placeholder="Input location name"
           onChange={handleChange}
           onKeyDown={handleKeyDownInput}
