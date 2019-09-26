@@ -22,9 +22,9 @@ styled components<br>
 City Geo-Location Lookup API<br>
 Foursquare Venue API<br>
 
-### query string
+### query string : foursquare
 
-?client_id=${FS_CLIENT_ID}&client_secret=${FS_CLIENT_SECRET}&query=lunch,restaurant,cafe&\${param}&v=20190724&limit=3
+https://api.foursquare.com/v2/venues?client_id=${FS_CLIENT_ID}&client_secret=${FS_CLIENT_SECRET}&query=lunch,restaurant,cafe&\${param}&v=20190724&limit=3
 <br>
 
 ##Live Demo
